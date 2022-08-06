@@ -461,10 +461,20 @@ typedef long long mstime_t; /* millisecond time type. */
 #define LRU_CLOCK_MAX ((1<<LRU_BITS)-1) /* Max value of obj->lru */
 #define LRU_CLOCK_RESOLUTION 1000 /* LRU clock resolution in ms */
 typedef struct redisObject {
+    // 数据类型:
+    // 0:STRING
+    // 1:LIST
+    // 2:SET
+    // 3:ZSET
+    // 4:HASH
     unsigned type:4;
+    // 内部编码: EMBSTR,ZIPLIST,HASHTABLE,...
     unsigned encoding:4;
+    // 上一次访问时间
     unsigned lru:LRU_BITS; /* lru time (relative to server.lruclock) */
+    // 引用计数
     int refcount;
+    // 数据指针
     void *ptr;
 } robj;
 
